@@ -10205,6 +10205,11 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   margin: 10px;
 }
 
+.center {
+  text-align: center;
+  margin-top: 20px;
+}
+
 .App {
   text-align: center;
 }
