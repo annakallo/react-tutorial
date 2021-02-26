@@ -23,19 +23,20 @@ class Entries extends Component {
 
     handleDelete(id) {
         const {entries} = this.state;
-        let newEntries = []
+        const newEntries = entries.filter(entry => entry.id !== id);
         // eslint-disable-next-line array-callback-return
-        entries.map(entry => {
-            if (entry.id !== id) {
-                newEntries.push(entry)
-            }
-        })
+        // entries.map(entry => {
+        //     if (entry.id !== id) {
+        //         newEntries.push(entry)
+        //     }
+        // })
         this.setState({entries: newEntries})
     }
 
     getCategoryClasses(id) {
         const {entries} = this.state;
         let classes = "tag is-";
+        // eslint-disable-next-line array-callback-return
         entries.map(entry => {
             if (entry.id === id) {
                 if (entry.category === "groceries") {

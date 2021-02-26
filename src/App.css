@@ -10207,7 +10207,15 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 .center {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.navbar {
+  overflow: hidden;
+}
+
+.navbar-start {
+  float: right;
 }
 
 .App {

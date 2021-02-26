@@ -3,14 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Counter from './components/counter';
-import Entries from "./components/expenses";
 
 ReactDOM.render(
     <React.StrictMode>
-        <Entries />
-        {/*<App />*/}
-        {/*<Counter />*/}
+        <App />
     </React.StrictMode>,
     document.getElementById('root')
 );
