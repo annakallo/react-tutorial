@@ -1,17 +1,23 @@
 import React, {Component} from "react";
 import {getEntries} from '../services/fakeEntries';
+import {getCategories} from '../services/fakeCategories';
 import Like from './common/like';
+import Pagination from './common/pagination';
+import {paginate} from '../utils/paginate';
+import FilterTime from "./common/filterTime";
+import FilterCategory from "./common/filterCategories";
+import {filterByTime, filterByCategory} from "../utils/filters";
 
 
 class Entries extends Component {
     state ={
         entries: getEntries(),
-        hearts: [
-            {id:1, full: false },
-            {id:2, full: false },
-            {id:3, full: false },
-            {id:4, full: false }
-        ]
+        categories: getCategories(),
+        currentPage: 1,
+        currentTimeFilter: "Get all entries",
+        currentCategoryFilter: "Get all entries",
+        pageSize: 4,
+        currentDateTime: new Date()
     };
 
     totalCalculation() {
@@ -60,12 +66,7 @@ class Entries extends Component {
         return classes;
     }
 
-    handleHeart = () => {
-        const full = true;
-        this.setState({full})
-    };
-
-    handleLike = (entry)  => {
+    handleLike = entry  => {
         const entries = [...this.state.entries];
         const index = entries.indexOf(entry);
         entries[index] ={...entries[index]};
@@ -73,46 +74,67 @@ class Entries extends Component {
         this.setState({entries});
     };
 
-    renderTable() {
-        const {entries} = this.state;
-        if (entries.length === 0) return null
-        return (
-            <table className="table is-fullwidth">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Category</th>
-                    <th>Shop</th>
-                    <th>Date</th>
-                    <th/>
-                    <th/>
-                </tr>
-                </thead>
-                <tbody>
-                {entries.map(entry =>
-                    <tr key={entry.id}>
-                        <th>{entry.id}</th>
-                        <td>{entry.title}</td>
-                        <td>{entry.amount}</td>
-                        <td><span className={this.getCategoryClasses(entry.id)}>{entry.category}</span></td>
-                        <td>{entry.shop}</td>
-                        <td>{entry.date}</td>
-                        <td><Like liked={entry.liked} onClick={() => this.handleLike(entry)}/></td>
-                        <td><button onClick={() => this.handleDelete(entry.id)} className="button is-danger is-small">delete</button></td>
-                    </tr>)}
-                </tbody>
-            </table>
-        );
-    }
+    handlePageChange = page => {
+        this.setState({currentPage: page});
+    };
+
+    handleTimeFilterChange = filter => {
+        this.setState({currentTimeFilter: filter});
+    };
+
+    handleCategoryFilterChange = filter => {
+        this.setState({currentCategoryFilter: filter});
+    };
 
     render() {
+        const {pageSize,currentPage, entries: allEntries} = this.state;
+        if (this.state.entries.length === 0) return null
+        const entriesFilteredByTime = filterByTime(allEntries, this.state.currentTimeFilter);
+        const entriesFilteredByCategory = filterByCategory(allEntries, this.state.currentCategoryFilter);
+        let entriesFiltered = entriesFilteredByTime.filter(x => entriesFilteredByCategory.includes(x));
+        const entries = paginate(entriesFiltered, currentPage, pageSize)
         return (
             <div className="container">
+                <FilterTime onFilterChange={this.handleTimeFilterChange}
+                            currentTimeFilter={this.state.currentTimeFilter}/>
+                <FilterCategory
+                            onFilterChange={this.handleCategoryFilterChange}
+                            currentCategory={this.state.currentCategoryFilter}
+                            allCategories={this.state.categories}/>
                 <h1 className="title center">Expenses</h1>
                 {this.renderResume()}
-                {this.renderTable()}
+                <table className="table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Shop</th>
+                        <th>Date</th>
+                        <th/>
+                        <th/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {entries.map(entry =>
+                        <tr key={entry.id}>
+                            <th>{entry.id}</th>
+                            <td>{entry.title}</td>
+                            <td>{entry.amount}</td>
+                            <td><span className={this.getCategoryClasses(entry.id)}>{entry.category}</span></td>
+                            <td>{entry.shop}</td>
+                            <td>{entry.date}</td>
+                            <td><Like liked={entry.liked} onClick={() => this.handleLike(entry)}/></td>
+                            <td><button onClick={() => this.handleDelete(entry.id)} className="button is-danger is-small">delete</button></td>
+                        </tr>)}
+                    </tbody>
+                </table>
+                <Pagination itemsCount={entriesFiltered.length}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={this.handlePageChange}
+                />
             </div>
         );
 
