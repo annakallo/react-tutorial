@@ -7,7 +7,8 @@ const expensesEntries = [
         amount: 125,
         category: "groceries",
         shop: "Mercadona",
-        date: "2021-01-03T19:04:28.809Z"
+        date: "2021-01-03T19:04:28.809Z",
+        liked: true
     },
     {
         id: 2,

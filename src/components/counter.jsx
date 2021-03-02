@@ -1,6 +1,12 @@
 import React, {Component} from "react";
 
 class Counter extends Component {
+    componentDidUpdate(prevProps,prevState) {
+        console.log('Counter-Updated');
+        console.log('prevProps', prevProps);
+        console.log('prevState', prevState);
+    };
+
     // state = {
     //     value: this.props.counter.value,
     //     // imageUrl: 'http://picsum.photos/200',
@@ -19,20 +25,33 @@ class Counter extends Component {
     //     return <ul>{this.state.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
     // }
 
+
     render() {
+        console.log('Counter-Rendered');
         return (
             <React.Fragment>
                 {/*<img src={this.state.imageUrl} alt="image"/>*/}
                 <h4>Counter #{this.props.counter.id}</h4>
                 <span style={this.style} className={this.getBadgeClasses()}>{this.formatCount()}</span>
                 <button onClick={() => this.props.onIncrement(this.props.counter)} style={{fontSize: 10}}
-                        className="button is-primary badge">
-                        Increment
+                        className="badge button is-primary">
+                        +
                 </button>
+                <button onClick={() => this.props.onDecrement(this.props.counter)} style={{fontSize: 10}}
+                        className={this.getDecrementColor()}
+                        disabled={this.props.counter.value === 0 ? 'disabled' : ''}
+                >-</button>
+
                 <button onClick={() => this.props.onDelete(this.props.counter.id)} style={{fontSize: 10}} className="button badge is-danger">Delete</button>
                 {/*{this.renderTags()}*/}
             </React.Fragment>
         );
+    }
+
+    getDecrementColor() {
+        let classes = "badge button is-";
+        classes += (this.props.counter.value === 0) ? "info" : "primary";
+        return classes
     }
 
     getBadgeClasses() {

@@ -1,10 +1,17 @@
 import React, {Component} from "react";
 import {getEntries} from '../services/fakeEntries';
+import Like from './common/like';
 
 
 class Entries extends Component {
     state ={
-        entries: getEntries()
+        entries: getEntries(),
+        hearts: [
+            {id:1, full: false },
+            {id:2, full: false },
+            {id:3, full: false },
+            {id:4, full: false }
+        ]
     };
 
     totalCalculation() {
@@ -53,6 +60,19 @@ class Entries extends Component {
         return classes;
     }
 
+    handleHeart = () => {
+        const full = true;
+        this.setState({full})
+    };
+
+    handleLike = (entry)  => {
+        const entries = [...this.state.entries];
+        const index = entries.indexOf(entry);
+        entries[index] ={...entries[index]};
+        entries[index].liked = !entries[index].liked;
+        this.setState({entries});
+    };
+
     renderTable() {
         const {entries} = this.state;
         if (entries.length === 0) return null
@@ -66,7 +86,8 @@ class Entries extends Component {
                     <th>Category</th>
                     <th>Shop</th>
                     <th>Date</th>
-                    <th></th>
+                    <th/>
+                    <th/>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +99,7 @@ class Entries extends Component {
                         <td><span className={this.getCategoryClasses(entry.id)}>{entry.category}</span></td>
                         <td>{entry.shop}</td>
                         <td>{entry.date}</td>
+                        <td><Like liked={entry.liked} onClick={() => this.handleLike(entry)}/></td>
                         <td><button onClick={() => this.handleDelete(entry.id)} className="button is-danger is-small">delete</button></td>
                     </tr>)}
                 </tbody>
