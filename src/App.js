@@ -1,8 +1,18 @@
 import React, {Component} from "react";
-import "./App.css";
+import {Route, Switch, Redirect} from "react-router-dom";
 import NavBar from "./components/navbar";
-import Counters from './components/counters';
 import Expenses from './components/expenses';
+// import Posts from './components/posts';
+// import Products from './components/products';
+// import Home from './components/home';
+// import Dashboard from "./components/admin/dashboard";
+// import ProductDetails from "./components/productDetails";
+// import NotFound2 from "./components/notFound2";
+import Incomes from "./components/incomes";
+import Overview from "./components/overview";
+import NotFound from "./components/notFound";
+import ExpensesEntry from "./components/ExpensesEntry";
+import "./App.css";
 
 class App extends Component {
     state = {
@@ -75,7 +85,27 @@ class App extends Component {
                     {/*          onDecrement={this.handleDecrement}*/}
                     {/*          onDelete={this.handleDelete}*/}
                     {/*/>*/}
-                    <Expenses/>
+
+                    {/*<Switch>*/}
+                    {/*    <Route path="/products/:id" component={ProductDetails}/>*/}
+                    {/*    <Route path="/products" render={(props) => <Products sortBy="newest" {...props}/>}/>*/}
+                    {/*    <Route path="/posts/:year?/:month?" component={Posts}/>*/}
+                    {/*    <Route path="/admin" component={Dashboard}/>*/}
+                    {/*    <Redirect from="/messages" to="/posts"/>*/}
+                    {/*    <Route path="/expenses" component={Expenses}/>*/}
+                    {/*    <Route path="/not-found" exact component={NotFound2}/>*/}
+                    {/*    <Route path="/" exact component={Home}/>*/}
+                    {/*    <Redirect to="/not-found"/>*/}
+                    {/*</Switch>*/}
+                    <Switch>
+                        <Route path="/incomes" component={Incomes}/>
+                        <Route path="/expenses/:id" component={ExpensesEntry}/>
+                        <Route path="/expenses" component={Expenses}/>
+                        <Route path="/overview" component={Overview}/>
+                        <Redirect from="/" exact to="/expenses"/>
+                        <Route path="/not-found" component={NotFound}/>
+                        <Redirect to="/not-found"/>}
+                    </Switch>
                 </main>
             </React.Fragment>
         );

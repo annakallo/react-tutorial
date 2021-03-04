@@ -1,4 +1,3 @@
-import {getCategories} from '../services/fakeCategories';
 
 export function filterByTime(items, filter) {
     let today = new Date();

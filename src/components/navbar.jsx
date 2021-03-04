@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React from "react";
+import NavLink from "react-router-dom/NavLink";
 
 // stateless functional component
 const NavBar = ({totalCounters}) => {
-    console.log('NavBar-Rendered');
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
@@ -12,12 +12,15 @@ const NavBar = ({totalCounters}) => {
 
             <div id="navbarBasicExample" className="navbar-menu">
                 <div className="navbar-start center">
-                    <a className="navbar-item" href="https://bulma.io">
+                    <NavLink className="navbar-item" to="/incomes">
+                        Incomes
+                    </NavLink>
+                    <NavLink className="navbar-item" to="/expenses">
                         Expenses
-                    </a>
-                    <a className="navbar-item" href="https://bulma.io">
-                        Grafs
-                    </a>
+                    </NavLink>
+                    <NavLink className="navbar-item" to="/overview">
+                        Overview
+                    </NavLink>
                 </div>
             </div>
         </nav>

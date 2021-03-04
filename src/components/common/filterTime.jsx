@@ -7,13 +7,13 @@ const FilterTime = props => {
         <div className="dropdown is-hoverable filter-position">
             <div className="dropdown-trigger">
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                    <span>Filter by Time: {props.currentTimeFilter}</span>
+                    <span>Filter by Time:</span>
                 </button>
             </div>
             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                 <div className="dropdown-content">
                     {timeLength.map(filter =>
-                        <a key={filter} className="dropdown-item"
+                        <a key={filter} className={filter === props.currentTimeFilter ? "dropdown-item is-active" : "dropdown-item"}
                             onClick={() => props.onFilterChange(filter)}>{filter}
                         </a>)}
                 </div>

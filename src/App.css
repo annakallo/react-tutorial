@@ -10222,6 +10222,10 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   float: right;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .App {
   text-align: center;
 }

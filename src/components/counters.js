@@ -8,7 +8,7 @@ class Counters extends Component {
         return (
             <div>
                 <button onClick={onReset} style={{fontSize: 10}}
-                        className="button badge is-danger"style={{fontSize: 10}} className="button badge is-warning">Reset</button>
+                        className="button badge is-danger">Reset</button>
                 {counters.map(counter =>
                     (<Counter
                         key={counter.id}

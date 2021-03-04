@@ -1,43 +1,45 @@
 import React, {Component} from "react";
 import {getEntries} from '../services/fakeEntries';
 import {getCategories} from '../services/fakeCategories';
-import Like from './common/like';
+import ExpensesTable from './expensesTable';
 import Pagination from './common/pagination';
 import {paginate} from '../utils/paginate';
 import FilterTime from "./common/filterTime";
 import FilterCategory from "./common/filterCategories";
-import {filterByTime, filterByCategory} from "../utils/filters";
-
+import {filterByCategory, filterByTime} from "../utils/filters";
+import _ from 'lodash';
+import {Route} from "react-router-dom";
+import Users from "./admin/users";
+import ExpensesEntry from "./ExpensesEntry";
 
 class Entries extends Component {
-    state ={
-        entries: getEntries(),
-        categories: getCategories(),
+    state = {
+        entries: [],
+        categories: [],
         currentPage: 1,
         currentTimeFilter: "Get all entries",
-        currentCategoryFilter: "Get all entries",
+        selectedCategory: "Get all entries",
         pageSize: 4,
-        currentDateTime: new Date()
+        sortColumn: {path: 'id', order: 'asc'}
     };
 
-    totalCalculation() {
-        const {entries} = this.state;
+    componentDidMount() {
+        const categories = [{id:'', name: "Get all entries"}, ...getCategories()]
+        this.setState({entries: getEntries(), categories});
+    }
+
+    totalCalculation = entries => {
         let total = 0;
         // eslint-disable-next-line array-callback-return
         entries.map(entry => total += entry.amount)
         return total
     }
 
-    renderResume() {
-        const {entries} = this.state;
-        if (entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
-        return <h5 className="title is-5 center">There are {entries.length} entries. Total amount of expenses is { this.totalCalculation()}€. </h5>
-    }
-
-    handleDelete(id) {
+    handleDelete = id => {
         const {entries} = this.state;
         const newEntries = entries.filter(entry => entry.id !== id);
         // eslint-disable-next-line array-callback-return
+        // const newEntries = [];
         // entries.map(entry => {
         //     if (entry.id !== id) {
         //         newEntries.push(entry)
@@ -46,30 +48,10 @@ class Entries extends Component {
         this.setState({entries: newEntries})
     }
 
-    getCategoryClasses(id) {
-        const {entries} = this.state;
-        let classes = "tag is-";
-        // eslint-disable-next-line array-callback-return
-        entries.map(entry => {
-            if (entry.id === id) {
-                if (entry.category === "groceries") {
-                    classes += "primary";
-                }
-                if (entry.category === "restaurant") {
-                    classes += "dark";
-                }
-                if (entry.category === "gift") {
-                    classes += "warning";
-                }
-            }
-        })
-        return classes;
-    }
-
-    handleLike = entry  => {
+    handleLike = entry => {
         const entries = [...this.state.entries];
         const index = entries.indexOf(entry);
-        entries[index] ={...entries[index]};
+        entries[index] = {...entries[index]};
         entries[index].liked = !entries[index].liked;
         this.setState({entries});
     };
@@ -78,66 +60,75 @@ class Entries extends Component {
         this.setState({currentPage: page});
     };
 
-    handleTimeFilterChange = filter => {
-        this.setState({currentTimeFilter: filter});
+    handleTimeFilterChange = time => {
+        this.setState({currentTimeFilter: time, currentPage: 1});
     };
 
-    handleCategoryFilterChange = filter => {
-        this.setState({currentCategoryFilter: filter});
+    handleCategoryFilterChange = category => {
+        this.setState({selectedCategory: category, currentPage: 1});
+    };
+
+    handleSort = sortColumn => {
+        this.setState({sortColumn})
+    };
+
+    getPagedData = () => {
+        const {
+            pageSize,
+            currentPage,
+            sortColumn,
+            entries: allEntries
+        } = this.state;
+
+        // filtering
+        const entriesFilteredByTime = filterByTime(allEntries, this.state.currentTimeFilter);
+        const entriesFilteredByCategory = filterByCategory(allEntries, this.state.selectedCategory);
+        let filtered = entriesFilteredByTime.filter(x => entriesFilteredByCategory.includes(x));
+
+        // sorting
+        const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+
+        const entries = paginate(sorted, currentPage, pageSize)
+        return {totalCount: sorted.length, data: entries}
     };
 
     render() {
-        const {pageSize,currentPage, entries: allEntries} = this.state;
-        if (this.state.entries.length === 0) return null
-        const entriesFilteredByTime = filterByTime(allEntries, this.state.currentTimeFilter);
-        const entriesFilteredByCategory = filterByCategory(allEntries, this.state.currentCategoryFilter);
-        let entriesFiltered = entriesFilteredByTime.filter(x => entriesFilteredByCategory.includes(x));
-        const entries = paginate(entriesFiltered, currentPage, pageSize)
+        const {
+            pageSize,
+            currentPage,
+            sortColumn,
+        } = this.state;
+
+        if (this.state.entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
+        const {totalCount, data: entries} = this.getPagedData();
         return (
             <div className="container">
                 <FilterTime onFilterChange={this.handleTimeFilterChange}
-                            currentTimeFilter={this.state.currentTimeFilter}/>
+                            currentTimeFilter={this.state.currentTimeFilter}
+                />
                 <FilterCategory
-                            onFilterChange={this.handleCategoryFilterChange}
-                            currentCategory={this.state.currentCategoryFilter}
-                            allCategories={this.state.categories}/>
+                    items={this.state.categories}
+                    selectedItem={this.state.selectedCategory}
+                    onItemSelect={this.handleCategoryFilterChange}
+                />
                 <h1 className="title center">Expenses</h1>
-                {this.renderResume()}
-                <table className="table is-fullwidth">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Amount</th>
-                        <th>Category</th>
-                        <th>Shop</th>
-                        <th>Date</th>
-                        <th/>
-                        <th/>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {entries.map(entry =>
-                        <tr key={entry.id}>
-                            <th>{entry.id}</th>
-                            <td>{entry.title}</td>
-                            <td>{entry.amount}</td>
-                            <td><span className={this.getCategoryClasses(entry.id)}>{entry.category}</span></td>
-                            <td>{entry.shop}</td>
-                            <td>{entry.date}</td>
-                            <td><Like liked={entry.liked} onClick={() => this.handleLike(entry)}/></td>
-                            <td><button onClick={() => this.handleDelete(entry.id)} className="button is-danger is-small">delete</button></td>
-                        </tr>)}
-                    </tbody>
-                </table>
-                <Pagination itemsCount={entriesFiltered.length}
+                <h5 className="title is-5 center">There are {totalCount} entries. Total amount of expenses
+                    is {this.totalCalculation(entries)}€. </h5>
+                <ExpensesTable
+                    entries={entries}
+                    sortColumn={sortColumn}
+                    onDelete={this.handleDelete}
+                    onLike={this.handleLike}
+                    onSort={this.handleSort}
+                />
+                {/*<Route path="/expenses/id" component={ExpensesEntry}/>*/}
+                <Pagination itemsCount={totalCount}
                             pageSize={pageSize}
                             currentPage={currentPage}
                             onPageChange={this.handlePageChange}
                 />
             </div>
         );
-
     }
 }
 
