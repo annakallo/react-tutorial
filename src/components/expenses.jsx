@@ -7,6 +7,7 @@ import {paginate} from '../utils/paginate';
 import FilterTime from "./common/filterTime";
 import FilterCategory from "./common/filterCategories";
 import {filterByCategory, filterByTime} from "../utils/filters";
+import {searchKeyword} from "../utils/search";
 import _ from 'lodash';
 import Link from "react-router-dom/Link";
 import SearchBar from "./searchBar";
@@ -20,7 +21,8 @@ class Entries extends Component {
         currentTimeFilter: "Get all entries",
         selectedCategory: "Get all entries",
         pageSize: 4,
-        sortColumn: {path: 'id', order: 'asc'}
+        sortColumn: {path: 'id', order: 'asc'},
+        searchBar: ''
     };
 
     componentDidMount() {
@@ -72,6 +74,12 @@ class Entries extends Component {
         this.setState({sortColumn})
     };
 
+    handleSearchChange = e => {
+        let searchBar;
+        searchBar = e.currentTarget.value;
+        this.setState({searchBar});
+    };
+
     getPagedData = () => {
         const {
             pageSize,
@@ -85,11 +93,20 @@ class Entries extends Component {
         const entriesFilteredByCategory = filterByCategory(allEntries, this.state.selectedCategory);
         let filtered = entriesFilteredByTime.filter(x => entriesFilteredByCategory.includes(x));
 
+        // searching
+        const entriesSearched = searchKeyword(allEntries, this.state.searchBar);
+        console.log(entriesSearched);
+
         // sorting
-        const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+        let sorted;
+        if (!this.state.searchBar) {
+            sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+        } else {
+            sorted = _.orderBy(entriesSearched, [sortColumn.path], [sortColumn.order]);
+        }
 
         const entries = paginate(sorted, currentPage, pageSize)
-        return {totalCount: sorted.length, data: entries}
+        return {totalCount: sorted.length, entries, total: sorted}
     };
 
     render() {
@@ -100,7 +117,7 @@ class Entries extends Component {
         } = this.state;
 
         if (this.state.entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
-        const {totalCount, data: entries} = this.getPagedData();
+        const {totalCount, entries, total} = this.getPagedData();
         // const {history} = this.props;
         return (
 
@@ -117,10 +134,13 @@ class Entries extends Component {
                         onItemSelect={this.handleCategoryFilterChange}
                     />
                 </div>
-                <SearchBar/>
+                <SearchBar
+                    searchBar={this.state.searchBar}
+                    onSearchChange={this.handleSearchChange}
+                />
                 <h1 className="title center">Expenses</h1>
                 <h5 className="title is-5 center">There are {totalCount} entries. Total amount of expenses
-                    is {this.totalCalculation(entries)}€. </h5>
+                    is {this.totalCalculation(total)}€. </h5>
                 <ExpensesTable
                     entries={entries}
                     sortColumn={sortColumn}

@@ -25,7 +25,7 @@ class EntryForm extends Form {
             .min(0)
             .required()
             .label('Amount'),
-        categoryId: Joi.string()
+        categoryId: Joi.number()
             .required()
             .label('Category'),
         shop: Joi.string()
@@ -33,7 +33,6 @@ class EntryForm extends Form {
             .label('Shop'),
         date: Joi.date(),
     };
-
 
     componentDidMount() {
         const categories = getCategories();

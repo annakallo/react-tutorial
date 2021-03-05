@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import Search from "./search";
 
 class Form extends Component {
     state = {
@@ -74,7 +75,7 @@ class Form extends Component {
                 error={errors[name]}
             />
         );
-    }
+    };
 
     renderSelect(name, label, options) {
         const { data, errors } = this.state;
@@ -88,7 +89,7 @@ class Form extends Component {
                 errors={errors[name]}
             />
         );
-    }
+    };
 }
 
 export default Form;
