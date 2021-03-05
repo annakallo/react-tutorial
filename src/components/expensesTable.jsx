@@ -9,8 +9,11 @@ class ExpensesTable extends Component {
         {path: 'id', label: 'Id'},
         {path: 'title', label: 'Title', content: entry => <Link to={`/expenses/${entry.id}`}>{entry.title}</Link>},
         {path: 'amount', label: 'Amount'},
-        {path: 'category', label: 'Category', content: entry => (
-            <span className={this.getCategoryClasses(this.props.entries, entry.id)}>{entry.category}</span>)},
+        {path: 'category.name', label: 'Category', content: entry => (
+            <span className={this.getCategoryClasses(this.props.entries, entry.id)}>{entry.category.name}</span>)},
+
+        // {path: 'category.name', label: 'Category'},
+
         {path: 'shop', label: 'Shop'},
         {path: 'date', label: 'Date'},
         {key:'like', content: entry => <Like liked={entry.liked} onClick={() => this.props.onLike(entry)}/>},
@@ -27,13 +30,13 @@ class ExpensesTable extends Component {
         // eslint-disable-next-line array-callback-return
         entries.map(entry => {
             if (entry.id === id) {
-                if (entry.category === "groceries") {
+                if (entry.category.id === 1) {
                     classes += "primary";
                 }
-                if (entry.category === "restaurant") {
+                if (entry.category.id === 2) {
                     classes += "dark";
                 }
-                if (entry.category === "gift") {
+                if (entry.category.id === 3) {
                     classes += "warning";
                 }
             }

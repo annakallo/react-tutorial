@@ -16,5 +16,5 @@ export function filterByTime(items, filter) {
 
 export function filterByCategory(items, filter) {
     if (filter === "Get all entries") return items;
-    return items.filter(entry => entry.category === filter);
+    return items.filter(entry => entry.category.name === filter);
 }

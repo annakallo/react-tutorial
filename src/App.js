@@ -7,6 +7,8 @@ import Overview from "./components/overview";
 import NotFound from "./components/notFound";
 import ExpensesEntry from "./components/ExpensesEntry";
 import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
+import EntryForm from "./components/entryForm";
 import "./App.css";
 
 class App extends Component {
@@ -76,10 +78,11 @@ class App extends Component {
                 <main>
                     <Switch>
                         <Route path="/incomes" component={Incomes}/>
-                        <Route path="/expenses/:id" component={ExpensesEntry}/>
+                        <Route path="/expenses/:id" component={EntryForm}/>
                         <Route path="/expenses" component={Expenses}/>
                         <Route path="/overview" component={Overview}/>
                         <Route path="/login" component={LoginForm}/>
+                        <Route path="/register" component={RegisterForm}/>
                         <Redirect from="/" exact to="/expenses"/>
                         <Route path="/not-found" component={NotFound}/>
                         <Redirect to="/not-found"/>}

@@ -1,6 +1,6 @@
 
 
-const categories = [
+export const categories = [
     {id:1, name: 'groceries'},
     {id:2, name: 'restaurant'},
     {id:3, name: 'gift'},

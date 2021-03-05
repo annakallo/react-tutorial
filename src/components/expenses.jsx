@@ -8,6 +8,8 @@ import FilterTime from "./common/filterTime";
 import FilterCategory from "./common/filterCategories";
 import {filterByCategory, filterByTime} from "../utils/filters";
 import _ from 'lodash';
+import Link from "react-router-dom/Link";
+import SearchBar from "./searchBar";
 
 
 class Entries extends Component {
@@ -99,16 +101,23 @@ class Entries extends Component {
 
         if (this.state.entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
         const {totalCount, data: entries} = this.getPagedData();
+        // const {history} = this.props;
         return (
+
             <div className="container">
-                <FilterTime onFilterChange={this.handleTimeFilterChange}
-                            currentTimeFilter={this.state.currentTimeFilter}
-                />
-                <FilterCategory
-                    items={this.state.categories}
-                    selectedItem={this.state.selectedCategory}
-                    onItemSelect={this.handleCategoryFilterChange}
-                />
+                <div>
+                    <Link to="/expenses/new" className="button is-primary">Add new entry</Link>
+                    {/*<button  onClick={() => history.push("/expenses/new")} className="button is-primary">Add new entry</button>*/}
+                    <FilterTime onFilterChange={this.handleTimeFilterChange}
+                                currentTimeFilter={this.state.currentTimeFilter}
+                    />
+                    <FilterCategory
+                        items={this.state.categories}
+                        selectedItem={this.state.selectedCategory}
+                        onItemSelect={this.handleCategoryFilterChange}
+                    />
+                </div>
+                <SearchBar/>
                 <h1 className="title center">Expenses</h1>
                 <h5 className="title is-5 center">There are {totalCount} entries. Total amount of expenses
                     is {this.totalCalculation(entries)}€. </h5>
