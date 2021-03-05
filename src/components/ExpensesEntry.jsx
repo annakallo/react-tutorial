@@ -28,5 +28,3 @@ const ExpensesEntry =({match, history}) => {
 }
 
 export default ExpensesEntry;
-
-// {this.props.match.params.id}

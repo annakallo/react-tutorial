@@ -8,9 +8,7 @@ import FilterTime from "./common/filterTime";
 import FilterCategory from "./common/filterCategories";
 import {filterByCategory, filterByTime} from "../utils/filters";
 import _ from 'lodash';
-import {Route} from "react-router-dom";
-import Users from "./admin/users";
-import ExpensesEntry from "./ExpensesEntry";
+
 
 class Entries extends Component {
     state = {

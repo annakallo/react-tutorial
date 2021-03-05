@@ -2,16 +2,11 @@ import React, {Component} from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
 import NavBar from "./components/navbar";
 import Expenses from './components/expenses';
-// import Posts from './components/posts';
-// import Products from './components/products';
-// import Home from './components/home';
-// import Dashboard from "./components/admin/dashboard";
-// import ProductDetails from "./components/productDetails";
-// import NotFound2 from "./components/notFound2";
 import Incomes from "./components/incomes";
 import Overview from "./components/overview";
 import NotFound from "./components/notFound";
 import ExpensesEntry from "./components/ExpensesEntry";
+import LoginForm from "./components/loginForm";
 import "./App.css";
 
 class App extends Component {
@@ -79,29 +74,12 @@ class App extends Component {
             <React.Fragment>
                 <NavBar totalCounters={this.state.counters.filter(c => c.value >0).length}/>
                 <main>
-                    {/*<Counters counters={this.state.counters}*/}
-                    {/*          onReset={this.handleReset}*/}
-                    {/*          onIncrement={this.handleIncrement}*/}
-                    {/*          onDecrement={this.handleDecrement}*/}
-                    {/*          onDelete={this.handleDelete}*/}
-                    {/*/>*/}
-
-                    {/*<Switch>*/}
-                    {/*    <Route path="/products/:id" component={ProductDetails}/>*/}
-                    {/*    <Route path="/products" render={(props) => <Products sortBy="newest" {...props}/>}/>*/}
-                    {/*    <Route path="/posts/:year?/:month?" component={Posts}/>*/}
-                    {/*    <Route path="/admin" component={Dashboard}/>*/}
-                    {/*    <Redirect from="/messages" to="/posts"/>*/}
-                    {/*    <Route path="/expenses" component={Expenses}/>*/}
-                    {/*    <Route path="/not-found" exact component={NotFound2}/>*/}
-                    {/*    <Route path="/" exact component={Home}/>*/}
-                    {/*    <Redirect to="/not-found"/>*/}
-                    {/*</Switch>*/}
                     <Switch>
                         <Route path="/incomes" component={Incomes}/>
                         <Route path="/expenses/:id" component={ExpensesEntry}/>
                         <Route path="/expenses" component={Expenses}/>
                         <Route path="/overview" component={Overview}/>
+                        <Route path="/login" component={LoginForm}/>
                         <Redirect from="/" exact to="/expenses"/>
                         <Route path="/not-found" component={NotFound}/>
                         <Redirect to="/not-found"/>}
