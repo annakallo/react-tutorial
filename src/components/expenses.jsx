@@ -10,7 +10,7 @@ import {filterByCategory, filterByTime} from "../utils/filters";
 import {searchKeyword} from "../utils/search";
 import _ from 'lodash';
 import Link from "react-router-dom/Link";
-import SearchBar from "./searchBar";
+import SearchBox from "./searchBox";
 
 
 class Entries extends Component {
@@ -20,9 +20,9 @@ class Entries extends Component {
         currentPage: 1,
         currentTimeFilter: "Get all entries",
         selectedCategory: "Get all entries",
+        searchQuery: '',
         pageSize: 4,
-        sortColumn: {path: 'id', order: 'asc'},
-        searchBar: ''
+        sortColumn: {path: 'id', order: 'asc'}
     };
 
     componentDidMount() {
@@ -63,21 +63,19 @@ class Entries extends Component {
     };
 
     handleTimeFilterChange = time => {
-        this.setState({currentTimeFilter: time, currentPage: 1});
+        this.setState({currentTimeFilter: time, searchQuery: "", currentPage: 1});
     };
 
     handleCategoryFilterChange = category => {
-        this.setState({selectedCategory: category, currentPage: 1});
+        this.setState({selectedCategory: category, searchQuery: "", currentPage: 1});
     };
 
     handleSort = sortColumn => {
         this.setState({sortColumn})
     };
 
-    handleSearchChange = e => {
-        let searchBar;
-        searchBar = e.currentTarget.value;
-        this.setState({searchBar});
+    handleSearch = query => {
+        this.setState({searchQuery: query, currentPage: 1})
     };
 
     getPagedData = () => {
@@ -85,6 +83,7 @@ class Entries extends Component {
             pageSize,
             currentPage,
             sortColumn,
+            searchQuery,
             entries: allEntries
         } = this.state;
 
@@ -94,12 +93,12 @@ class Entries extends Component {
         let filtered = entriesFilteredByTime.filter(x => entriesFilteredByCategory.includes(x));
 
         // searching
-        const entriesSearched = searchKeyword(allEntries, this.state.searchBar);
+        const entriesSearched = searchKeyword(allEntries, searchQuery);
         console.log(entriesSearched);
 
         // sorting
         let sorted;
-        if (!this.state.searchBar) {
+        if (!searchQuery) {
             sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
         } else {
             sorted = _.orderBy(entriesSearched, [sortColumn.path], [sortColumn.order]);
@@ -114,6 +113,7 @@ class Entries extends Component {
             pageSize,
             currentPage,
             sortColumn,
+            searchQuery,
         } = this.state;
 
         if (this.state.entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
@@ -134,9 +134,9 @@ class Entries extends Component {
                         onItemSelect={this.handleCategoryFilterChange}
                     />
                 </div>
-                <SearchBar
-                    searchBar={this.state.searchBar}
-                    onSearchChange={this.handleSearchChange}
+                <SearchBox
+                    value={searchQuery}
+                    onChange={this.handleSearch}
                 />
                 <h1 className="title center">Expenses</h1>
                 <h5 className="title is-5 center">There are {totalCount} entries. Total amount of expenses

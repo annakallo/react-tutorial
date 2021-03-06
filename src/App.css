@@ -10201,15 +10201,10 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   padding: 3rem 1.5rem 6rem;
 }
 
-.search-bar {
+.search-box {
   float: right;
-}
-.search-bar .search-bar {
-  width: 246px;
-  float: left;
-}
-.search-bar .search-button {
-  float: left;
+  width: 295px;
+  padding-top: 10px;
 }
 
 .badge {

@@ -5,17 +5,11 @@
  */
 
  @import "../node_modules/bulma/bulma.sass";
-.search-bar {
-    float:right;
+.search-box {
+    float: right;
+    width: 295px;
+    padding-top: 10px;
 
-    .search-bar {
-        width: 246px;
-          float: left;
-    }
-
-    .search-button {
-        float: left;
-    }
 }
 
 
