@@ -10,6 +10,7 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import EntryForm from "./components/entryForm";
 import "./App.css";
+import Home from "./components/home";
 
 class App extends Component {
     state = {
@@ -55,21 +56,21 @@ class App extends Component {
         this.setState({counters});
     };
 
-    handleIncrement = counter => {
-        const counters = [...this.state.counters];
-        const index = counters.indexOf(counter);
-        counters[index] = {...counter};
-        counters[index].value++;
-        this.setState({counters});
-    }
-
-    handleDecrement = counter => {
-        const counters = [...this.state.counters];
-        const index = counters.indexOf(counter);
-        counters[index] = {...counter};
-        counters[index].value--;
-        this.setState({counters});
-    }
+    // handleIncrement = counter => {
+    //     const counters = [...this.state.counters];
+    //     const index = counters.indexOf(counter);
+    //     counters[index] = {...counter};
+    //     counters[index].value++;
+    //     this.setState({counters});
+    // }
+    //
+    // handleDecrement = counter => {
+    //     const counters = [...this.state.counters];
+    //     const index = counters.indexOf(counter);
+    //     counters[index] = {...counter};
+    //     counters[index].value--;
+    //     this.setState({counters});
+    // }
     render() {
         console.log('App-Rendered');
         return (
@@ -83,6 +84,7 @@ class App extends Component {
                         <Route path="/overview" component={Overview}/>
                         <Route path="/login" component={LoginForm}/>
                         <Route path="/register" component={RegisterForm}/>
+                        <Route path="/home" component={Home}/>
                         <Redirect from="/" exact to="/expenses"/>
                         <Route path="/not-found" component={NotFound}/>
                         <Redirect to="/not-found"/>}
