@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {getEntries} from '../services/fakeEntries';
-import {getCategories} from '../services/fakeCategories';
+import {getEntries} from '../services/entryService';
+import {getCategories} from '../services/categoryService';
 import ExpensesTable from './expensesTable';
 import Pagination from './common/pagination';
 import {paginate} from '../utils/paginate';
@@ -19,15 +19,19 @@ class Entries extends Component {
         categories: [],
         currentPage: 1,
         currentTimeFilter: "Get all entries",
-        selectedCategory: "Get all entries",
+        selectedCategory: 0,
         searchQuery: '',
         pageSize: 4,
         sortColumn: {path: 'id', order: 'asc'}
     };
 
-    componentDidMount() {
-        const categories = [{id:'', name: "Get all entries"}, ...getCategories()]
-        this.setState({entries: getEntries(), categories});
+    async componentDidMount() {
+        const { data } = await getCategories();
+        const categories = [{id:0 , category_name: "Get all entries"}, ...data];
+
+        const { data: entries } = await getEntries();
+        this.setState({entries, categories});
+        // this.setState({entries});
     }
 
     totalCalculation = entries => {
@@ -94,7 +98,6 @@ class Entries extends Component {
 
         // searching
         const entriesSearched = searchKeyword(allEntries, searchQuery);
-        console.log(entriesSearched);
 
         // sorting
         let sorted;
