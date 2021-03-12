@@ -18,7 +18,7 @@ class ExpensesTable extends Component {
         {path: 'updated_at', label: 'Date', content: entry => (<span>{this.getTimeFormat(entry.updated_at)}</span>)},
         {key:'like', content: entry => <Like liked={entry.liked} onClick={() => this.props.onLike(entry)}/>},
         {key:'delete', content: entry => (
-            <button onClick={() => this.props.onDelete(entry.id)}
+            <button onClick={() => this.props.onDelete(entry)}
                     className="button is-danger is-small">delete
             </button>
             )

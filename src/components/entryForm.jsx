@@ -1,15 +1,15 @@
 import React from "react";
 import Joi from 'joi-browser';
 import Form from './common/form';
-import {getCategories} from "../services/fakeCategories";
-import {getEntry, saveEntry} from "../services/fakeEntries";
+import {getCategories} from "../services/categoryService";
+import {getEntry, saveEntry} from "../services/entryService";
 
 class EntryForm extends Form {
     state = {
         data: {
             title: '',
             amount: '',
-            categoryId: '',
+            category: '',
             shop: ''
         },
         categories: [],
@@ -25,7 +25,7 @@ class EntryForm extends Form {
             .min(0)
             .required()
             .label('Amount'),
-        categoryId: Joi.number()
+        category: Joi.number()
             .required()
             .label('Category'),
         shop: Joi.string()
@@ -34,17 +34,29 @@ class EntryForm extends Form {
         date: Joi.date(),
     };
 
-    componentDidMount() {
-        const categories = getCategories();
+    populateCategories = async () => {
+        const { data } = await getCategories();
+        const categories = [...data];
         this.setState({categories});
+    }
 
-        const entryId = this.props.match.params.id;
-        if (entryId === "new") return;
+    populateEntry = async () => {
+        try {
+            const entryId = this.props.match.params.id;
+            if (entryId === "new") return;
+            const {data: entry}= await getEntry(entryId);
+            this.setState({data: this.mapToViewModel(entry)});
+        }
+        catch (ex) {
 
-        const entry = getEntry(entryId);
-        if (!entry) return this.props.history.replace("/not-found");
+            if (ex.response && ex.response === 404)
+                this.props.history.replace("/not-found");
+        }
+    }
 
-        this.setState({data: this.mapToViewModel(entry)});
+    async componentDidMount() {
+        await this.populateCategories();
+        await this.populateEntry();
     }
 
     mapToViewModel(entry) {
@@ -52,14 +64,13 @@ class EntryForm extends Form {
             id: entry.id,
             title: entry.title,
             amount: entry.amount,
-            categoryId: entry.category.id,
-            shop: entry.shop,
-            date: entry.date
+            category: entry.category,
+            shop: entry.shop
         };
     }
 
-    doSubmit = () => {
-        saveEntry(this.state.data);
+    doSubmit = async () => {
+        await saveEntry(this.state.data);
         this.props.history.push("/expenses");
         // Call the server
         console.log('Submitted');
@@ -72,7 +83,7 @@ class EntryForm extends Form {
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput('title', 'Title')}
                     {this.renderInput('amount', 'Amount')}
-                    {this.renderSelect('categoryId', 'Category', this.state.categories)}
+                    {this.renderSelect('category', 'Category', this.state.categories)}
                     {this.renderInput('shop', 'Shop')}
                     {this.renderButton("Save")}
                 </form>

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {getEntries} from '../services/entryService';
+import {getEntries, deleteEntry} from '../services/entryService';
 import {getCategories} from '../services/categoryService';
 import ExpensesTable from './expensesTable';
 import Pagination from './common/pagination';
@@ -11,6 +11,7 @@ import {searchKeyword} from "../utils/search";
 import _ from 'lodash';
 import Link from "react-router-dom/Link";
 import SearchBox from "./searchBox";
+import {toast} from "react-toastify";
 
 
 class Entries extends Component {
@@ -31,7 +32,6 @@ class Entries extends Component {
 
         const { data: entries } = await getEntries();
         this.setState({entries, categories});
-        // this.setState({entries});
     }
 
     totalCalculation = entries => {
@@ -41,18 +41,20 @@ class Entries extends Component {
         return total
     }
 
-    handleDelete = id => {
-        const {entries} = this.state;
-        const newEntries = entries.filter(entry => entry.id !== id);
-        // eslint-disable-next-line array-callback-return
-        // const newEntries = [];
-        // entries.map(entry => {
-        //     if (entry.id !== id) {
-        //         newEntries.push(entry)
-        //     }
-        // })
-        this.setState({entries: newEntries})
-    }
+    handleDelete = async entryToDelete => {
+        const originalEntries = this.state.entries;
+        const entries = this.state.entries.filter(entry => entry.id !== entryToDelete.id);
+        this.setState({entries})
+        try {
+            await deleteEntry(entryToDelete.id)
+        }
+        catch (ex) {
+            console.log('HANDLE DELETE CATCH BLOCK.');
+            if (ex.response && ex.response.status === 404)
+                toast('This entry has already been deleted.');
+            this.setState({entries: originalEntries});
+        }
+    };
 
     handleLike = entry => {
         const entries = [...this.state.entries];

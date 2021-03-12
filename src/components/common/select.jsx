@@ -8,7 +8,7 @@ const Select = ({ name, label, options, error, ...rest }) => {
                 <div className="select">
                     <select name={name} id={name} {...rest}>
                         <option value=""/>
-                        {options.map(option => <option key={option.id} value={option.id}>{option.name}</option>)}
+                        {options.map(option => <option key={option.id} value={option.id}>{option.category_name}</option>)}
                     </select>
                     {error && <div>{error}</div>}
                 </div>
