@@ -117,6 +117,7 @@ class Entries extends Component {
             currentPage,
             sortColumn,
             searchQuery,
+            categories,
         } = this.state;
 
         if (this.state.entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
@@ -146,6 +147,7 @@ class Entries extends Component {
                     is {this.totalCalculation(total)}€. </h5>
                 <ExpensesTable
                     entries={entries}
+                    categories={categories}
                     sortColumn={sortColumn}
                     onDelete={this.handleDelete}
                     onLike={this.handleLike}
