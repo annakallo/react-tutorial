@@ -128,9 +128,17 @@ class Entries extends Component {
         return (
 
             <div className="container">
-                <div>
-                    <Link to="/expenses/new" className="button is-primary">Add new entry</Link>
+                <h3 className="title is-3 center">Expenses</h3>
+                <div className="add-more">
+                    <Link to="/expenses/new" className="button is-link is-medium add-more-button">+</Link>
+                </div>
+
+                <div className="filters">
                     {/*<button  onClick={() => history.push("/expenses/new")} className="button is-primary">Add new entry</button>*/}
+                    <SearchBox
+                        value={searchQuery}
+                        onChange={this.handleSearch}
+                    />
                     <FilterTime onFilterChange={this.handleTimeFilterChange}
                                 currentTimeFilter={this.state.currentTimeFilter}
                     />
@@ -140,13 +148,6 @@ class Entries extends Component {
                         onItemSelect={this.handleCategoryFilterChange}
                     />
                 </div>
-                <SearchBox
-                    value={searchQuery}
-                    onChange={this.handleSearch}
-                />
-                <h1 className="title center">Expenses</h1>
-                <h5 className="title is-5 center">There are {totalCount} entries. Total amount of expenses
-                    is {this.totalCalculation(total)}€. </h5>
                 <ExpensesTable
                     entries={entries}
                     categories={categories}
@@ -155,12 +156,14 @@ class Entries extends Component {
                     onLike={this.handleLike}
                     onSort={this.handleSort}
                 />
+
                 {/*<Route path="/expenses/id" component={ExpensesEntry}/>*/}
                 <Pagination itemsCount={totalCount}
                             pageSize={pageSize}
                             currentPage={currentPage}
                             onPageChange={this.handlePageChange}
                 />
+                <h5 className="title is-5 center">There are {totalCount} entries. <br/> Total amount of expenses is {this.totalCalculation(total)} €. </h5>
             </div>
         );
     }

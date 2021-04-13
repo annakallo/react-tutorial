@@ -5,7 +5,7 @@ const NavBar = () => {
     return (
         <nav className="navbar" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <h1 className="title center">ParmTracker</h1>
+                <h4 className="title is-4 center-navbar">ParmTracker</h4>
 
                 <button className="navbar-burger" aria-label="menu" aria-expanded="false"
                    data-target="navbarBasicExample">
@@ -21,7 +21,7 @@ const NavBar = () => {
                         Home
                     </NavLink>
                 </div> */ }
-                <div className="navbar-end center">
+                <div className="navbar-end">
                     <NavLink className="navbar-item" to="/incomes">
                         Incomes
                     </NavLink>

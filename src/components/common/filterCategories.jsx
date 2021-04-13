@@ -6,7 +6,7 @@ const FilterCategory = ({selectedItem, items, onItemSelect, textProperty, valueP
         <div className="dropdown is-hoverable filter-position">
             <div className="dropdown-trigger">
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                    <span>Filter by Category:</span>
+                    <span>Filter by Category</span>
                 </button>
             </div>
             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
