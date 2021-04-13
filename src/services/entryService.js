@@ -1,7 +1,6 @@
 import http from './httpService';
-import {apiUrl} from '../config.json';
 
-const  apiEndpoint = apiUrl + '/expenses';
+const  apiEndpoint = '/expenses';
 
 
 function entryUrl(id) {

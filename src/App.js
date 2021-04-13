@@ -5,7 +5,6 @@ import Expenses from './components/expenses';
 import Incomes from "./components/incomes";
 import Overview from "./components/overview";
 import NotFound from "./components/notFound";
-import ExpensesEntry from "./components/ExpensesEntry";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import EntryForm from "./components/entryForm";
