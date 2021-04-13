@@ -7,12 +7,12 @@ const NavBar = () => {
             <div className="navbar-brand">
                 <h1 className="title center">ParmTracker</h1>
 
-                <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false"
+                <button className="navbar-burger" aria-label="menu" aria-expanded="false"
                    data-target="navbarBasicExample">
                     <span aria-hidden="true"/>
                     <span aria-hidden="true"/>
                     <span aria-hidden="true"/>
-                </a>
+                </button>
             </div>
 
             <div id="navbarBasicExample" className="navbar-menu">

@@ -12,6 +12,14 @@
 
 }
 
+.navbar-brand button {
+    border: none;
+    background-color: Transparent;
+    &:active, &:hover, &:focus {
+       outline: 0;
+       background-color: Transparent;
+    }
+}
 
  .badge {
     margin: 10px;

@@ -10207,6 +10207,15 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   padding-top: 10px;
 }
 
+.navbar-brand button {
+  border: none;
+  background-color: Transparent;
+}
+.navbar-brand button:active, .navbar-brand button:hover, .navbar-brand button:focus {
+  outline: 0;
+  background-color: Transparent;
+}
+
 .badge {
   margin: 10px;
 }
