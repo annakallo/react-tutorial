@@ -56,14 +56,6 @@ class Entries extends Component {
         }
     };
 
-    handleLike = entry => {
-        const entries = [...this.state.entries];
-        const index = entries.indexOf(entry);
-        entries[index] = {...entries[index]};
-        entries[index].liked = !entries[index].liked;
-        this.setState({entries});
-    };
-
     handlePageChange = page => {
         this.setState({currentPage: page});
     };
@@ -122,13 +114,13 @@ class Entries extends Component {
             categories,
         } = this.state;
 
-        if (this.state.entries.length === 0) return <h5 className="title is-5 center">There are no entries!</h5>
+        if (this.state.entries.length === 0) return <h5 className="title is-5 center-text">There are no entries!</h5>
         const {totalCount, entries, total} = this.getPagedData();
         // const {history} = this.props;
         return (
 
             <div className="container">
-                <h3 className="title is-3 center">Expenses</h3>
+                <h3 className="title is-3 center-text">Expenses</h3>
                 <div className="add-more">
                     <Link to="/expenses/new" className="button is-link is-medium add-more-button">+</Link>
                 </div>
@@ -163,7 +155,7 @@ class Entries extends Component {
                             currentPage={currentPage}
                             onPageChange={this.handlePageChange}
                 />
-                <h5 className="title is-5 center">There are {totalCount} entries. <br/> Total amount of expenses is {this.totalCalculation(total)} €. </h5>
+                <h5 className="title is-5 center-text total-text">There are {totalCount} entries. <br/> Total amount of expenses is {this.totalCalculation(total)} €. </h5>
             </div>
         );
     }

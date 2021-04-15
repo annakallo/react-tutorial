@@ -79,7 +79,7 @@ class EntryForm extends Form {
     render() {
         return (
             <div className="container">
-                <h1 className="title center">New entry</h1>
+                <h1 className="title center-text">New entry</h1>
                 <form onSubmit={this.handleSubmit}>
                     {this.renderInput('title', 'Title')}
                     {this.renderInput('amount', 'Amount')}

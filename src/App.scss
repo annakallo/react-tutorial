@@ -4,180 +4,119 @@
  * Bulma customization
  */
 
- @import "../node_modules/bulma/bulma.sass";
+@import "../node_modules/bulma/bulma.sass";
+
+@import "assets/normalize";
 
 
+/** Navbar */
 
-.navbar-brand button {
-    border: none;
-    background-color: Transparent;
-    &:active, &:hover, &:focus {
-       outline: 0;
-       background-color: Transparent;
+.navbar {
+    margin: 0 auto;
+    padding: 0 0 60px 0;
+    max-width: 1152px;
+    @media (max-width: 376px){
+        padding: 5px 0 50px 0;
+    }
+    .navbar-brand {
+        button {
+            border: none;
+            background-color: Transparent;
+            &:active, &:hover, &:focus {
+               outline: 0;
+               background-color: Transparent;
+            }
+        }
+        .center-navbar-title {
+            margin-top: 25px;
+            @media (max-width: 376px){
+                margin: 15px 0 0 25px;
+            }
+       }
+       .navbar-burger {
+            margin-right: 5px;
+       }
+    }
+    .navbar-item {
+        @media (max-width: 376px){
+            text-align: center;
+        }
+    }
+    .navbar-item:last-child {
+        padding-right: 0px;
+        @media (max-width: 376px){
+                    padding-right: 12px;
+                }
     }
 }
 
-.navbar-brand button {
-  border: none;
-  background-color: Transparent;
-}
-.navbar-brand button:active, .navbar-brand button:hover, .navbar-brand button:focus {
-  outline: 0;
-  background-color: Transparent;
+/** --- Expenses page --- */
+/** Control area */
+
+/* Add entry */
+.center-text {
+    text-align: center;
+    margin-top: 0;
 }
 
 .add-more {
- text-align: center;
+    text-align: center;
+    .add-more-button {
+        width: 150px;
+    }
 }
 
-.add-more-button {
-    width: 150px;
-}
-
- .badge {
-    margin: 10px;
- }
-
- .center-navbar {
-    text-align: center;
-    margin-top: 25px;
- }
-
- .center {
-    text-align: center;
-    margin-top: 0;
- }
-
- .navbar {
-    overflow: hidden;
- }
-
- .navbar-start {
-    float: right;
- }
-
+/* Filters and search bar */
 .filters {
-  //width: 700px;
-  //float: right;
+    padding: 15px 0;
+    @media (max-width: 376px){
+        text-align: center;
+        padding: 30px 0;
+    }
+    .filter-position {
+        float: right;
+        padding-top: 20px;
+        padding-bottom: 30px;
+        @media (max-width: 376px){
+            float: none;
+            padding: 0 2px;
+        }
+    }
+    .search-box {
+        float: left;
+        width: 295px;
+        padding-top: 20px;
+        padding-bottom: 30px;
+        @media (max-width: 376px){
+            float: none;
+            padding-bottom: 4px;
+            width: 292px;
+        }
+    }
 }
 
-.filter-position {
-    float: right;
-    padding-top: 20px;
-    padding-bottom: 30px;
-}
-
-.search-box {
-    float: left;
-    width: 295px;
-    padding-top: 20px;
-    padding-bottom: 30px;
-
-}
-
-
-
- .clickable {
-    cursor: pointer;
- }
-
- .buttonIn {
-         width: 300px;
-         position: relative;
-     }
-
-     #search-input {
-     }
-
-     #search-button {
-
-     }
-
-  .search {
+/** Table area */
+.table-wrapper {
+    overflow-x: auto;
     width: 100%;
-    position: relative;
-    display: flex;
-  }
+    padding-bottom: 20px;
+}
 
-  .searchTerm {
-    width: 100%;
-    border: 3px solid #00B4CC;
-    border-right: none;
-    padding: 5px;
-    height: 20px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
-    color: #9DBFAF;
-  }
-
-  .searchTerm:focus{
-    color: #00B4CC;
-  }
-
-  .searchButton {
-    width: 40px;
-    height: 36px;
-    border: 1px solid #00B4CC;
-    background: #00B4CC;
-    text-align: center;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
+.clickable {
     cursor: pointer;
-    font-size: 20px;
-  }
+}
 
-  /*Resize the wrap to see the search bar change!*/
-  .wrap{
-    width: 30%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.total-text {
+    margin-bottom: 50px;
+}
 
- form {
+/** --- Forms: adding new entry --- */
+form {
     margin-left: auto;
     margin-right: auto;
     width: 400px;
- }
+    @media (max-width: 376px){
+        width: 280px;
+    }
+}
 
- // from original react
-
- .App {
-   text-align: center;
- }
-
- .App-logo {
-   height: 40vmin;
-   pointer-events: none;
- }
-
- @media (prefers-reduced-motion: no-preference) {
-   .App-logo {
-     animation: App-logo-spin infinite 20s linear;
-   }
- }
-
- .App-header {
-   background-color: #282c34;
-   min-height: 100vh;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   font-size: calc(10px + 2vmin);
-   color: white;
- }
-
- .App-link {
-   color: #61dafb;
- }
-
- @keyframes App-logo-spin {
-   from {
-     transform: rotate(0deg);
-   }
-   to {
-     transform: rotate(360deg);
-   }
- }

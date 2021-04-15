@@ -51,7 +51,7 @@ class Form extends Component {
     renderButton(label) {
         return (
             <div className="field">
-                <div className="control center">
+                <div className="control center-text">
                     <button
                         id={label}
                         disabled={this.validate()}
