@@ -9,18 +9,8 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import EntryForm from "./components/entryForm";
 import "./App.css";
-import Home from "./components/home";
 
 class App extends Component {
-
-    componentWillMount () {
-        const script = document.createElement("script");
-
-        script.src = "https://use.fontawesome.com/7fd7fceaab.js";
-        script.async = true;
-
-        document.body.appendChild(script);
-    }
 
     render() {
         console.log('App-Rendered');
@@ -35,7 +25,6 @@ class App extends Component {
                         <Route path="/overview" component={Overview}/>
                         <Route path="/login" component={LoginForm}/>
                         <Route path="/register" component={RegisterForm}/>
-                        <Route path="/home" component={Home}/>
                         <Redirect from="/" exact to="/expenses"/>
                         <Route path="/not-found" component={NotFound}/>
                         <Redirect to="/not-found"/>}

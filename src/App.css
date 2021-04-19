@@ -10570,6 +10570,9 @@ template {
 .navbar .navbar-brand .navbar-burger {
   margin-right: 5px;
 }
+.navbar .navbar-item .mdi {
+  margin-right: 5px;
+}
 @media (max-width: 376px) {
   .navbar .navbar-item {
     text-align: center;
@@ -10643,6 +10646,10 @@ template {
 
 .clickable {
   cursor: pointer;
+}
+
+.tag .mdi {
+  margin-right: 5px;
 }
 
 .total-text {

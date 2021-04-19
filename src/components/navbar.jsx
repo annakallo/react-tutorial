@@ -22,12 +22,15 @@ const NavBar = () => {
                 </div> */ }
                 <div className="navbar-end">
                     <NavLink className="navbar-item" to="/incomes">
+                        <span className="mdi mdi-home-plus-outline"/>
                         Incomes
                     </NavLink>
                     <NavLink className="navbar-item" to="/expenses">
+                        <span className="mdi mdi-home-minus-outline"/>
                         Expenses
                     </NavLink>
                     <NavLink className="navbar-item" to="/overview">
+                        <span className="mdi mdi-chart-bar"/>
                         Overview
                     </NavLink>
                     { /* <NavLink className="navbar-item" to="/login">

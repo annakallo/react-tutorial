@@ -9,10 +9,10 @@ class ExpensesTable extends Component {
         {path: 'title', label: 'Title', content: entry => <Link to={`/expenses/${entry.id}`}>{entry.title}</Link>},
         {path: 'amount', label: 'Amount'},
         {path: 'category', label: 'Category', content: entry => (
-            <span className={this.getCategoryClasses(this.props.entries, entry.id)}>{this.getCategoryName(entry.category)}</span>)},
-
-        // {path: 'category.name', label: 'Category'},
-
+            <span style={{backgroundColor: this.getCategoryFromDb(entry.category).category_color}} className="tag">
+                <span className={["mdi", this.getCategoryFromDb(entry.category).category_icon].join(" ")}/>
+                {this.getCategoryFromDb(entry.category).category_name}
+            </span>)},
         {path: 'shop', label: 'Shop'},
         {path: 'updated_at', label: 'Date', content: entry => (<span>{this.getTimeFormat(entry.updated_at)}</span>)},
         {key:'delete', content: entry => (
@@ -28,32 +28,12 @@ class ExpensesTable extends Component {
         return new Date(time).toDateString()
     };
 
-    getCategoryName = id => {
+    getCategoryFromDb = id => {
         const {categories} = this.props;
         const category = categories.filter(cat => cat.id === id)
-        let catName = category[0].category_name;
-        if (category[0].id === 0) catName = '';
-        return catName
+        if (category[0].id === 0) return "";
+        return category[0]
     }
-
-    getCategoryClasses = (entries, id) => {
-        let classes = "";
-        // eslint-disable-next-line array-callback-return
-        entries.map(entry => {
-            if (entry.id === id) {
-                if (entry.category === 1) {
-                    classes += "tag is-primary";
-                }
-                if (entry.category === 2) {
-                    classes += "tag is-dark";
-                }
-                if (entry.category === 3) {
-                    classes += "tag is-warning";
-                }
-            }
-        })
-        return classes;
-    };
 
     render() {
         const {entries, onSort, sortColumn} = this.props;

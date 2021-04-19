@@ -38,6 +38,9 @@
        }
     }
     .navbar-item {
+        .mdi {
+            margin-right: 5px;
+        }
         @media (max-width: 376px){
             text-align: center;
         }
@@ -104,6 +107,10 @@
 
 .clickable {
     cursor: pointer;
+}
+
+.tag .mdi {
+    margin-right: 5px;
 }
 
 .total-text {

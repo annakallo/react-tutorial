@@ -149,7 +149,6 @@ class Entries extends Component {
                     onSort={this.handleSort}
                 />
 
-                {/*<Route path="/expenses/id" component={ExpensesEntry}/>*/}
                 <Pagination itemsCount={totalCount}
                             pageSize={pageSize}
                             currentPage={currentPage}
