@@ -126,7 +126,7 @@ class Entries extends Component {
                 </div>
 
                 <div className="filters">
-                    {/*<button  onClick={() => history.push("/expenses/new")} className="button is-primary">Add new entry</button>*/}
+
                     <SearchBox
                         value={searchQuery}
                         onChange={this.handleSearch}
@@ -139,6 +139,11 @@ class Entries extends Component {
                         selectedItem={this.state.selectedCategory}
                         onItemSelect={this.handleCategoryFilterChange}
                     />
+                    <div className="add-category">
+                        <Link to="/categories" className="button is-link is-light add-category-button">
+                            <span className="mdi mdi-square-edit-outline" title="Edit categories" />
+                        </Link>
+                    </div>
                 </div>
                 <ExpensesTable
                     entries={entries}

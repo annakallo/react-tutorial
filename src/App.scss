@@ -9,6 +9,16 @@
 @import "assets/normalize";
 
 
+/* taking out the default styling of any button */
+button {
+        border: none;
+        background-color: Transparent;
+        &:active, &:hover, &:focus {
+           outline: 0;
+           background-color: Transparent;
+        }
+    }
+
 /** Navbar */
 
 .navbar {
@@ -19,14 +29,6 @@
         padding: 5px 0 50px 0;
     }
     .navbar-brand {
-        button {
-            border: none;
-            background-color: Transparent;
-            &:active, &:hover, &:focus {
-               outline: 0;
-               background-color: Transparent;
-            }
-        }
         .center-navbar-title {
             margin-top: 25px;
             @media (max-width: 376px){
@@ -72,6 +74,7 @@
 /* Filters and search bar */
 .filters {
     padding: 15px 0;
+    display: flex;
     @media (max-width: 376px){
         text-align: center;
         padding: 30px 0;
@@ -85,11 +88,33 @@
             padding: 0 2px;
         }
     }
+    .filter-time {
+        margin-right: 10px;
+    }
+    .filter-category {
+        margin-right: 10px;
+    }
+    .add-category {
+        padding-top: 20px;
+        float: left;
+        .add-category-button {
+            // margin-right: 10px;
+        }
+
+        .span[title]:hover:after {
+            content: attr(title);
+            color: red;
+            position: absolute;
+              top: -100%;
+              left: 0;
+        }
+    }
     .search-box {
         float: left;
         width: 295px;
         padding-top: 20px;
         padding-bottom: 30px;
+        margin-right: 10px;
         @media (max-width: 376px){
             float: none;
             padding-bottom: 4px;
@@ -117,6 +142,32 @@
     margin-bottom: 50px;
 }
 
+
+/** Categories page */
+
+.category-container {
+    width: 100%;
+    .category-table {
+        width: 70%;
+        float: left;
+        padding-right: 30px;
+    }
+    .add-new-category {
+        width: 30%;
+        float: right;
+        .new-category-form {
+            width: auto;
+        }
+
+    }
+    .add-new-category-button {
+        text-align: center;
+    }
+    .field {
+        justify-content: center;
+    }
+}
+
 /** --- Forms: adding new entry --- */
 form {
     margin-left: auto;
@@ -127,3 +178,6 @@ form {
     }
 }
 
+.is-delete {
+    cursor: pointer;
+}

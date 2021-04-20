@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Table from "./common/table";
 import Link from "react-router-dom/Link";
 
+const emptyCategory = {category_name: "", category_color: "", category_icon: ""};
 
 class ExpensesTable extends Component {
     columns = [
@@ -30,9 +31,9 @@ class ExpensesTable extends Component {
 
     getCategoryFromDb = id => {
         const {categories} = this.props;
-        const category = categories.filter(cat => cat.id === id)
-        if (category[0].id === 0) return "";
-        return category[0]
+        const category = categories.filter(cat => cat.id === id);
+        if (category.length === 0) return emptyCategory;
+        return category[0];
     }
 
     render() {

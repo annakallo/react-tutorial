@@ -10540,6 +10540,16 @@ template {
   display: none;
 }
 
+/* taking out the default styling of any button */
+button {
+  border: none;
+  background-color: Transparent;
+}
+button:active, button:hover, button:focus {
+  outline: 0;
+  background-color: Transparent;
+}
+
 /** Navbar */
 .navbar {
   margin: 0 auto;
@@ -10550,14 +10560,6 @@ template {
   .navbar {
     padding: 5px 0 50px 0;
   }
-}
-.navbar .navbar-brand button {
-  border: none;
-  background-color: Transparent;
-}
-.navbar .navbar-brand button:active, .navbar .navbar-brand button:hover, .navbar .navbar-brand button:focus {
-  outline: 0;
-  background-color: Transparent;
 }
 .navbar .navbar-brand .center-navbar-title {
   margin-top: 25px;
@@ -10605,6 +10607,7 @@ template {
 /* Filters and search bar */
 .filters {
   padding: 15px 0;
+  display: flex;
 }
 @media (max-width: 376px) {
   .filters {
@@ -10623,11 +10626,29 @@ template {
     padding: 0 2px;
   }
 }
+.filters .filter-time {
+  margin-right: 10px;
+}
+.filters .filter-category {
+  margin-right: 10px;
+}
+.filters .add-category {
+  padding-top: 20px;
+  float: left;
+}
+.filters .add-category .span[title]:hover:after {
+  content: attr(title);
+  color: red;
+  position: absolute;
+  top: -100%;
+  left: 0;
+}
 .filters .search-box {
   float: left;
   width: 295px;
   padding-top: 20px;
   padding-bottom: 30px;
+  margin-right: 10px;
 }
 @media (max-width: 376px) {
   .filters .search-box {
@@ -10656,6 +10677,29 @@ template {
   margin-bottom: 50px;
 }
 
+/** Categories page */
+.category-container {
+  width: 100%;
+}
+.category-container .category-table {
+  width: 70%;
+  float: left;
+  padding-right: 30px;
+}
+.category-container .add-new-category {
+  width: 30%;
+  float: right;
+}
+.category-container .add-new-category .new-category-form {
+  width: auto;
+}
+.category-container .add-new-category-button {
+  text-align: center;
+}
+.category-container .field {
+  justify-content: center;
+}
+
 /** --- Forms: adding new entry --- */
 form {
   margin-left: auto;
@@ -10666,6 +10710,10 @@ form {
   form {
     width: 280px;
   }
+}
+
+.is-delete {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=App.css.map */
