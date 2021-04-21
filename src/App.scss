@@ -93,6 +93,9 @@ button {
     }
     .filter-category {
         margin-right: 10px;
+        .mdi {
+                    margin-right: 5px;
+                }
     }
     .add-category {
         padding-top: 20px;
@@ -100,6 +103,7 @@ button {
         .add-category-button {
             // margin-right: 10px;
         }
+
 
         .span[title]:hover:after {
             content: attr(title);

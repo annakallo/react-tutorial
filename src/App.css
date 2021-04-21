@@ -10632,6 +10632,9 @@ button:active, button:hover, button:focus {
 .filters .filter-category {
   margin-right: 10px;
 }
+.filters .filter-category .mdi {
+  margin-right: 5px;
+}
 .filters .add-category {
   padding-top: 20px;
   float: left;
