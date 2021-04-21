@@ -6,7 +6,7 @@ class CategoriesList extends Component {
         return (
             <div className="field is-grouped is-grouped-multiline category-table">
                 { categories.map(category =>
-                    <div className="control">
+                    <div className="control" key={category.id}>
                         <div className="tags has-addons">
                             <span style={{backgroundColor: category.category_color}} className="tag">
                                 <span className={["mdi", category.category_icon].join(" ")}/>

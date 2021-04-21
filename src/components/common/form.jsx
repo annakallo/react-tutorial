@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import SelectColor from "./selectColor";
 
 class Form extends Component {
     state = {
@@ -79,6 +80,20 @@ class Form extends Component {
         const { data, errors } = this.state;
         return (
             <Select
+                name={name}
+                value={data[name]}
+                label={label}
+                options={options}
+                onChange={this.handleChange}
+                errors={errors[name]}
+            />
+        );
+    };
+
+    renderSelectColor(name, label, options) {
+        const { data, errors } = this.state;
+        return (
+            <SelectColor
                 name={name}
                 value={data[name]}
                 label={label}

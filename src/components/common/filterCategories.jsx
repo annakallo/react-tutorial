@@ -12,9 +12,9 @@ const FilterCategory = ({selectedItem, items, onItemSelect, textProperty, valueP
             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                 <div className="dropdown-content">
                     {items.map(filter =>
-                        <a key={filter[valueProperty]} className={filter[valueProperty] === selectedItem ? "dropdown-item is-active" : "dropdown-item"}
+                        <button key={filter[valueProperty]} className={filter[valueProperty] === selectedItem ? "dropdown-item is-active" : "dropdown-item"}
                            onClick={() => onItemSelect(filter[valueProperty])}>{filter[textProperty]}
-                        </a>)}
+                        </button>)}
                 </div>
             </div>
         </div>

@@ -9,7 +9,6 @@ import NotFound from "./components/notFound";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import EntryForm from "./components/entryForm";
-import CategoryForm from "./components/categoryForm";
 import "./App.css";
 
 

@@ -13,9 +13,9 @@ const FilterTime = props => {
             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                 <div className="dropdown-content">
                     {timeLength.map(filter =>
-                        <a key={filter} className={filter === props.currentTimeFilter ? "dropdown-item is-active" : "dropdown-item"}
+                        <button key={filter} className={filter === props.currentTimeFilter ? "dropdown-item is-active" : "dropdown-item"}
                             onClick={() => props.onFilterChange(filter)}>{filter}
-                        </a>)}
+                        </button>)}
                 </div>
             </div>
         </div>

@@ -1,18 +1,8 @@
 import React, {Component} from "react";
 import {getCategories, deleteCategory} from "../services/categoryService";
-import {deleteEntry, getEntries} from "../services/entryService";
 import {toast} from "react-toastify";
-import {filterByCategory, filterByTime} from "../utils/filters";
-import {searchKeyword} from "../utils/search";
-import _ from "lodash";
-import {paginate} from "../utils/paginate";
 import Link from "react-router-dom/Link";
-import SearchBox from "./searchBox";
-import FilterTime from "./common/filterTime";
-import FilterCategory from "./common/filterCategories";
 import CategoriesList from "./categoriesList";
-import Pagination from "./common/pagination";
-import ExpensesTable from "./expensesTable";
 import CategoryForm from "./categoryForm";
 import {Route} from "react-router-dom";
 
@@ -26,21 +16,22 @@ class Categories extends Component {
 
     async componentDidMount() {
         const { data } = await getCategories();
-        const categories = [ ...data];
-        this.setState({ categories});
+        this.setState({categories : data});
     }
+
+    handleUpdate = async () => {
+        const { data } = await getCategories();
+        this.setState({categories : data});
+    };
 
     handleDelete = async categoryToDelete => {
         const originalCategories = this.state.categories;
         const categories = this.state.categories.filter(category => category.id !== categoryToDelete);
         this.setState({categories: categories});
-        console.log("to delete", categoryToDelete);
         try {
             await deleteCategory(categoryToDelete)
         }
         catch (ex) {
-            console.log(ex);
-            console.log('HANDLE DELETE CATCH BLOCK.');
             if (ex.response && ex.response.status === 404)
                 toast('This category has already been deleted.');
             this.setState({categories: originalCategories});
@@ -56,8 +47,14 @@ class Categories extends Component {
                         <div className="add-new-category-button">
                             <Link to="/categories/new" className="button is-link is-medium add-more-button">+</Link>
                         </div>
-                        <Route path="/categories/new" component={CategoryForm}/>
+                        <Route
+                            path="/categories/new"
+                            render={(props) => (
+                                <CategoryForm {...props} onUpdate={this.handleUpdate}/>
+                            )}
+                        />
                     </div>
+                    {(categories.length === 0) && <h5 className="title is-5 center-text total-text">There are no categories. Please add new ones.</h5>}
                     <CategoriesList
                         categories={categories}
                         onDelete={this.handleDelete}
